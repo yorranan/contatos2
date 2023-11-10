@@ -22,12 +22,12 @@ export class FirebaseService {
 
   create(contato: Contato){
     return this.firestore.collection(this.PATH)
-    .add({nome: contato.nome, telefone: contato.telefone});
+    .add({nome: contato.nome, telefone: contato.telefone, donwloadURL: contato.downloadURL});
   }
 
   update(contato: Contato, id: string){
     return this.firestore.collection(this.PATH).doc(id)
-    .update({nome: contato.nome, telefone: contato.telefone});
+    .update({nome: contato.nome, telefone: contato.telefone, donwloadURL: contato.downloadURL});
   }
 
   delete(contato: Contato){
