@@ -68,4 +68,4 @@ testem.log
 Thumbs.db
 
 #Firebase Connection
-src/environments/environment.prod.ts
+!src/environments/environment.prod.ts
