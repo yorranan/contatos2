@@ -15,7 +15,7 @@ export default class Contato{
   public set id(value: string) {
     this._id = value;
   }
-  
+
   public get nome(): string {
     return this._nome;
   }

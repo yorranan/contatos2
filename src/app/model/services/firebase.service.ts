@@ -22,12 +22,23 @@ export class FirebaseService {
 
   create(contato: Contato){
     return this.firestore.collection(this.PATH)
-    .add({nome: contato.nome, telefone: contato.telefone, donwloadURL: contato.downloadURL});
+    .add({nome: contato.nome, telefone: contato.telefone});
+  }
+
+  createWithAvatar(contato: Contato){
+    console.log(contato.downloadURL);
+    return this.firestore.collection(this.PATH)
+    .add({nome: contato.nome, telefone: contato.telefone, downloadURL: contato.downloadURL});
   }
 
   update(contato: Contato, id: string){
     return this.firestore.collection(this.PATH).doc(id)
-    .update({nome: contato.nome, telefone: contato.telefone, donwloadURL: contato.downloadURL});
+    .update({nome: contato.nome, telefone: contato.telefone});
+  }
+
+  updateWithAvatar(contato: Contato, id: string){
+    return this.firestore.collection(this.PATH).doc(id)
+    .update({nome: contato.nome, telefone: contato.telefone, downloadURL: contato.downloadURL});
   }
 
   delete(contato: Contato){
@@ -42,7 +53,7 @@ export class FirebaseService {
       console.error("Tipo não suportado!");
       return;
     }
-    const path = `images/${contato.id}_${file.name}`;
+    const path = `images/${contato.nome}_${file.name}`;
     const fileRef = this.storage.ref(path);
     let taks = this.storage.upload(path, file);
     taks.snapshotChanges().pipe(
@@ -51,10 +62,10 @@ export class FirebaseService {
         uploadFileURL.subscribe(resp => {
           contato.downloadURL = resp;
           if (!contato.id) {
-            this.create(contato);
+            this.createWithAvatar(contato);
           }
           else {
-            this.update(contato, contato.id);
+            this.updateWithAvatar(contato, contato.id);
           }
         })
       })
