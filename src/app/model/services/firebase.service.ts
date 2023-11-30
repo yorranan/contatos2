@@ -49,7 +49,7 @@ export class FirebaseService {
 
   uploadImage(imagem: any, contato: Contato) {
     const file = imagem.item(0);
-    if (file.type.split('/')[0] != 'image') {
+    if (file.type.split('/')[0] !== 'image') {
       console.error("Tipo não suportado!");
       return;
     }
