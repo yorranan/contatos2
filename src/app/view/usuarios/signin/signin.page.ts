@@ -20,7 +20,7 @@ export class SigninPage implements OnInit {
 
   ngOnInit() {
     this.formLogar = this.formBuilder.group({
-      // o primeiro campo se refere ao campo que pode vir preenchido quando carregamos a tela
+      // o primeiro campo se refere ao campo que pode vir preenchido quando carregamos a tela ou vazio como está configurado no momento
       email: ['', [Validators.required, Validators.email]],
       senha: ['', [Validators.required, Validators.minLength(8)]]
     });

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AlertService } from 'src/app/common/alert.service';
 
 @Component({
@@ -8,9 +10,47 @@ import { AlertService } from 'src/app/common/alert.service';
 })
 export class SignupPage implements OnInit {
 
-  constructor(private alertService: AlertService) { }
+  formCadastrar: FormGroup;
+
+  constructor(private router: Router, private formBuilder: FormBuilder, private alertService: AlertService) {
+    this.formCadastrar = new FormGroup({
+      email: new FormControl(''),
+      senha: new FormControl(''),
+      confirmarSenha: new FormControl('')
+    });
+  }
 
   ngOnInit() {
+    this.formCadastrar = this.formBuilder.group({
+      // o primeiro campo se refere ao campo que pode vir preenchido quando carregamos a tela ou vazio como está configurado no momento
+      email: ['', [Validators.required, Validators.email]],
+      senha: ['', [Validators.required, Validators.minLength(8)]],
+      confirmarSenha: ['', [Validators.required]]
+    });
+  }
+
+  get erroControl() {
+    return this.formCadastrar.controls;
+  }
+
+  submitForm() {
+    if(!this.formCadastrar.valid){
+      this.alertService.presentAlert("Erro", "Campos Obrigatórios!");
+      return false;
+    }
+    else{
+      this.cadastrar();
+      return true;
+    }
+  }
+
+  private cadastrar() {
+    this.alertService.presentAlert("Sucesso", "Cadastro realizado com sucesso!");
+    this.router.navigate(['home']);
+  }
+
+  irParaSignIn() {
+    this.router.navigate(['signin']);
   }
 
 }
