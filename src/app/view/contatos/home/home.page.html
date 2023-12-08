@@ -3,10 +3,12 @@
     <ion-title>
       AGENDA DE CONTATOS
     </ion-title>
+    <ion-icon slot="end" (click)="logout()" name="exit-outline" style="margin-right: 5%;"></ion-icon>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+
 
   <ion-list *ngFor="let contato of lista_contatos">
     <ion-item (click)="editar(contato)">
