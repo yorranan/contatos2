@@ -12,12 +12,14 @@ import { FirebaseService } from 'src/app/model/services/firebase.service';
 export class HomePage {
 
   public lista_contatos : Contato[] = [];
+  public user: any;
 
   constructor(private firesabe : FirebaseService,
     private router : Router,
-    private authService: AuthService) {
-      console.log(this.authService.getUserLogged());
-      this.firesabe.read()
+    private auth: AuthService) {
+      this.user = this.auth.getUserLogged()
+      console.log(this.auth.getUserLogged());
+      this.firesabe.read(this.user.uid)
       .subscribe(res => {
         this.lista_contatos = res.map(contato =>{
           return{
@@ -38,7 +40,7 @@ export class HomePage {
   }
 
   logout(){
-    this.authService.SignOut().then(res => {
+    this.auth.SignOut().then(res => {
       this.router.navigate(['signin']);
     })
   }
